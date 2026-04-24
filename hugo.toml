@@ -1,3 +1,4 @@
 baseURL = 'https://yuchenyue.github.io/notes/'
 locale = 'zh-CN'
 title = '我的笔记'
+theme = "hugo-theme-hextra"
