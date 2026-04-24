@@ -1,9 +1,3 @@
 baseURL = 'https://yuchenyue.github.io/notes/'
 locale = 'zh-CN'
 title = '我的笔记'
-theme = "PaperMod"
-
-[params]
-  # 主题自定义参数，例如 PaperMod 的选项：
-  ShowReadingTime = true
-  ShowBreadCrumbs = true
