@@ -40,6 +40,16 @@ jobs:
         with:
           path: ./public
 
+      - name: Deploy to Gitee Pages
+        uses: yanglbme/gitee-pages-action@main
+        with:
+          gitee-username: yuycy
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          gitee-repo: yuycy/notes
+          branch: gh-pages
+          directory: public
+          https: true
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -50,3 +60,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+
+        749f75c2628efe58628d59d8edeedb71
