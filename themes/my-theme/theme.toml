@@ -1,0 +1,14 @@
+name = "my-theme"
+license = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "A clean and modern Hugo theme for personal notes"
+homepage = "https://github.com/yuchenyue/my-theme"
+tags = ["blog", "notes", "masonry", "responsive"]
+features = ["masonry layout", "dark mode ready", "fast loading"]
+
+[author]
+name = "yuchenyue"
+homepage = "https://github.com/yuchenyue"
+
+[minimum]
+hugoVersion = "0.146.0"

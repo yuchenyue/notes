@@ -3,6 +3,28 @@ locale = 'zh-CN'
 title = '我的笔记'
 theme = "my-theme"
 
-[author]
-name = "yuchenyue"
-homepage = "https://github.com/yuchenyue"
+[params]
+  [params.author]
+    name = "yuchenyue"
+    homepage = "https://github.com/yuchenyue"
+
+[menus]
+  [[menus.main]]
+    name = '首页'
+    pageRef = '/'
+    weight = 10
+
+  [[menus.main]]
+    name = '文章'
+    pageRef = '/posts'
+    weight = 20
+
+  [[menus.main]]
+    name = 'VUE'
+    pageRef = '/vue'
+    weight = 20
+
+  [[menus.main]]
+    name = '标签'
+    pageRef = '/tags'
+    weight = 30

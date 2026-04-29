@@ -1,7 +1,25 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-  {{ end }}
+<div class="list-page">
+  <div class="tags-cloud">
+    {{ range $tag, $pages := .Site.Taxonomies.tags }}
+    {{/* Try multiple candidate term page paths to handle non-ascii tags */}}
+    {{ $c1 := printf "/tags/%s/" $tag }}
+    {{ $c2 := printf "/tags/%s/" (urlize $tag) }}
+    {{ $c3 := printf "taxonomy/tags/%s" $tag }}
+    {{ $c4 := printf "taxonomy/tags/%s" (urlize $tag) }}
+    {{ $candidates := slice $c1 $c2 $c3 $c4 }}
+    {{ $.Scratch.Set "termPage" nil }}
+    {{ range $candidates }}
+      {{ with $.Site.GetPage . }}
+        {{ $.Scratch.Set "termPage" . }}
+      {{ end }}
+    {{ end }}
+    {{ $termPage := $.Scratch.Get "termPage" }}
+    <a href="{{ if $termPage }}{{ $termPage.RelPermalink }}{{ else }}{{ "/tags/" | relURL }}{{ $tag | urlize }}/{{ end }}" class="tag-item">
+      <span class="tag-name">{{ $tag }}</span>
+      <span class="tag-count">{{ len $pages }}</span>
+    </a>
+    {{ end }}
+  </div>
+</div>
 {{ end }}

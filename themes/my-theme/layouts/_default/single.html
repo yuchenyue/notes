@@ -1,0 +1,30 @@
+{{ define "main" }}
+<div class="single-page">
+  <a href="{{ "/" | relLangURL }}" class="back-btn" title="返回">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>返回</span>
+  </a>
+  <article class="single-article">
+    <header class="single-header">
+      <h1>{{ .Title }}</h1>
+      <div class="single-meta">
+        <span class="single-author">{{ with site.Params.author.name }}{{ . }}{{ end }}</span>
+        <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006年1月2日" }}</time>
+      </div>
+      {{ if .Params.tags }}
+      <div class="single-tags">
+        {{ range .Params.tags }}
+        <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>
+        {{ end }}
+      </div>
+      {{ end }}
+    </header>
+    <div class="single-content">
+      {{ .Content }}
+    </div>
+  </article>
+</div>
+{{ end }}

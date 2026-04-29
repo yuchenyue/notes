@@ -1,9 +1,61 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
+<div class="masonry" id="masonry-container" data-home="true">
+  {{ $paginator := .Paginate site.RegularPages 12 }}
+  {{ range $paginator.Pages }}
+  <a href="{{ .RelPermalink }}" class="card">
+    <div class="card-image">
+      {{ $cover := "" }}
+      {{ with .Params.cover }}
+      {{ $cover = . }}
+      {{ else }}
+      {{ with .Resources.ByType "image" }}
+      {{ with index . 0 }}
+      {{ $cover = .RelPermalink }}
+      {{ end }}
+      {{ end }}
+      {{ end }}
+      {{ if $cover }}
+      <img data-src="{{ $cover }}" alt="{{ .Title }}" class="lazy-image">
+      {{ else }}
+      {{ $hash := hash.FNV32a .Title }}
+      {{ $sizes := slice 200 300 400 500 600 }}
+      {{ $wIdx := mod $hash (len $sizes) }}
+      {{ $hIdx := mod (add $hash 3) (len $sizes) }}
+      {{ $width := index $sizes $wIdx }}
+      {{ $height := index $sizes $hIdx }}
+      <img data-src="https://picsum.photos/seed/{{ .Title | urlize }}/{{ $width }}/{{ $height }}.webp"
+        alt="{{ .Title }}" class="lazy-image">
+      {{ end }}
+    </div>
+    <div class="card-body">
+      <h2 class="card-title">{{ .Title }}</h2>
+      <p class="card-summary">{{ .Summary | plainify | truncate 80 }}</p>
+      <div class="card-meta">
+        <span class="card-author">{{ with site.Params.author.name }}{{ . }}{{ end }}</span>
+        <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      </div>
+    </div>
+  </a>
   {{ end }}
+</div>
+
+<div class="load-more-container">
+  {{ if $paginator.HasNext }}
+  <div class="load-more" id="load-more-btn">
+    <svg class="load-more-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2">
+      <polyline points="12 5 15 9 9 9"></polyline>
+      <path d="M5 15h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2z"></path>
+    </svg>
+    <span>加载更多</span>
+  </div>
+  <div class="loading-spinner" id="loading-spinner" style="display: none;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle class="spinner" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="50 50" />
+    </svg>
+  </div>
+  {{ end }}
+</div>
+
 {{ end }}

@@ -1,7 +1,48 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-  {{ end }}
+<div class="list-page">
+  <a href="{{ "/tags/" | relURL }}" class="back-btn" title="返回标签列表">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>返回标签</span>
+  </a>
+  <div class="list-header">
+    <h1>{{ .LinkTitle }}</h1>
+    <p class="list-description">共 {{ len .Pages }} 篇文章</p>
+  </div>
+  <div class="posts-grid">
+    {{ range .Pages }}
+    <a href="{{ .RelPermalink }}" class="post-card">
+      <div class="post-card-image">
+        {{ $cover := "" }}
+        {{ with .Params.cover }}
+          {{ $cover = . }}
+        {{ else }}
+          {{ with .Resources.ByType "image" }}
+            {{ with index . 0 }}
+              {{ $cover = .RelPermalink }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ if $cover }}
+          <img src="{{ $cover }}" alt="{{ .Title }}" loading="lazy">
+        {{ else }}
+          {{ $hash := hash.FNV32a .Title }}
+          {{ $width := add 200 (mod $hash 401) }}
+          {{ $height := add 200 (mod (add $hash 100) 401) }}
+          <img src="https://picsum.photos/seed/{{ .Title | urlize }}/{{ $width }}/{{ $height }}" alt="{{ .Title }}" loading="lazy">
+        {{ end }}
+      </div>
+      <div class="post-card-body">
+        <h2 class="post-card-title">{{ .LinkTitle }}</h2>
+        <p class="post-card-summary">{{ .Summary | plainify | truncate 80 }}</p>
+        <div class="post-card-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
 {{ end }}

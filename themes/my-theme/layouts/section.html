@@ -1,10 +1,37 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
+<div class="list-page">
+  <div class="posts-grid">
+    {{ range .Pages }}
+    <a href="{{ .RelPermalink }}" class="post-card">
+      <div class="post-card-image">
+        {{ $cover := "" }}
+        {{ with .Params.cover }}
+          {{ $cover = . }}
+        {{ else }}
+          {{ with .Resources.ByType "image" }}
+            {{ with index . 0 }}
+              {{ $cover = .RelPermalink }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ if $cover }}
+          <img src="{{ $cover }}" alt="{{ .Title }}" loading="lazy">
+        {{ else }}
+          {{ $hash := hash.FNV32a .Title }}
+          {{ $width := add 200 (mod $hash 401) }}
+          {{ $height := add 200 (mod (add $hash 100) 401) }}
+          <img src="https://picsum.photos/seed/{{ .Title | urlize }}/{{ $width }}/{{ $height }}" alt="{{ .Title }}" loading="lazy">
+        {{ end }}
+      </div>
+      <div class="post-card-body">
+        <h2 class="post-card-title">{{ .LinkTitle }}</h2>
+        <p class="post-card-summary">{{ .Summary | plainify | truncate 80 }}</p>
+        <div class="post-card-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
 {{ end }}
