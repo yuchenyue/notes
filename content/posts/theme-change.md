@@ -1,8 +1,9 @@
 ---
 date: '2026-04-24T10:00:00+08:00'
+lastmod: '2026-04-29T10:00:00+08:00'
 draft: false
 title: 'Hugo 主题切换'
-tags: ['hugo', '主题','spring']
+tags: ['hugo', '主题']
 ---
 
 ## Hugo 使用 Git Submodule 切换主题
