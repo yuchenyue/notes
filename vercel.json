@@ -3,5 +3,12 @@
     "env": {
       "HUGO_VERSION": "0.160.1"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/notes/",
+      "permanent": true
+    }
+  ]
 }
