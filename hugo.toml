@@ -4,6 +4,7 @@ title = '我的笔记'
 theme = "my-theme"
 
 [params]
+  homeURL = "/notes/"
   [params.author]
     name = "yuchenyue"
     homepage = "https://github.com/yuchenyue"

@@ -22,3 +22,12 @@ title = 'My New Hugo Project'
   [module.hugoVersion]
     extended = false
     min = '0.146.0'
+
+# Theme example params - you can copy these into your site config to override defaults
+[params]
+# If your site is served under a subpath (e.g. example.org/notes/), set homeURL to that path
+# Example (in your site config):
+# [params]
+#   homeURL = "/notes/"
+# If not set, the header will fallback to the site's root (relLangURL "/").
+  homeURL = "/"

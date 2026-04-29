@@ -1,2 +1,3 @@
-<a href="{{ "/notes/" | relURL }}" class="site-title">{{ site.Title }}</a>
+{{ $home := default ("/" | relLangURL) .Site.Params.homeURL }}
+<a href="{{ $home }}" class="site-title">{{ site.Title }}</a>
 {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
